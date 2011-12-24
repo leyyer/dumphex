@@ -12,6 +12,9 @@ Executable dumphex
     Main-Is: dumphex.hs
     Build-Depends: base >= 3,
                    bytestring >= 0.9
+
+Extra-Source-Files: README
 Source-Repository head
     Type: git
-    Location: http://github.com/leyyer/dumphex.git
+    Location: git@github.com:leyyer/dumphex.git
+
