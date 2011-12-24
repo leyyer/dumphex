@@ -6,6 +6,7 @@ import System.IO
 import System.Environment
 import Text.Printf (printf)
 
+{- | dumphex [binary file] [output file] -}
 main :: IO ()
 main = do
   (f:t:_) <- getArgs
