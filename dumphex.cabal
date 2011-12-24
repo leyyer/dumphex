@@ -1,0 +1,17 @@
+Name: dumphex
+Version: 0.9
+Synopsis: Dump binary file to hex array
+License: BSD3
+License-file: LICENSE
+Author: leyyer
+Maintainer: surenyi@gmail.com
+Build-Type: Simple
+Cabal-Version: >= 1.8
+
+Executable dumphex
+    Main-Is: dumphex.hs
+    Build-Depends: base >= 3,
+                   bytestring >= 0.9
+Source-Repository head
+    Type: git
+    Location: http://github.com/leyyer/dumphex.git
