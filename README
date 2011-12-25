@@ -1,2 +1,7 @@
-dump binary to a big hex C array.
-write in Haskell.
+Dump file to a big hex binary C array.
+written in Haskell.
+
+Install:
+$ runhaskell Setup configure --prefix=$HOME --user
+$ runhaskell Setup build
+$ runhaskell Setup install
