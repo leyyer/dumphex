@@ -1,6 +1,6 @@
 {- | Dump binary file to hex array -}
-module Main where
-import Control.Exception (bracket)
+module Main (main) where
+import Control.Monad (liftM2)
 import Data.ByteString.Lazy as B hiding (init, concatMap)
 import System.IO
 import System.Environment
@@ -10,17 +10,15 @@ import Text.Printf (printf)
 main :: IO ()
 main = do
   (f:t:_) <- getArgs
-  bracket (openFile f ReadMode)
-    (hClose)
-    (\from -> do
-        bracket (openFile t WriteMode)
-          (hClose)
-          (\to -> hPutStrLn to "const data[] = {" >> dumpOut from to >> hPutStrLn to "};"))
+  liftM2 (,) (openFile f ReadMode) (openFile t WriteMode) >>= dumpOut_ >>= \(f,t) -> hClose f >> hClose t
+    
+dumpOut_ :: (Handle, Handle) -> IO (Handle, Handle)
+dumpOut_ (f, t) = hPutStrLn t "const data [] = {" >> dumpOut f t >> hPutStrLn t "};" >> return (f, t)
   
 {- | dump to output file -}
 dumpOut :: Handle -- ^ Input file handle
-           -> Handle -- ^ Output file handle
-           -> IO ()
+        -> Handle -- ^ Output file handle
+        -> IO ()
 dumpOut from to = do
   chunk <- B.hGetNonBlocking from 16
   eof <- hIsEOF from
