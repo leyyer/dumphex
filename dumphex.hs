@@ -15,13 +15,10 @@ main = do
 dumpOut_ :: (Handle, Handle) -> IO (Handle, Handle)
 dumpOut_ (f, t) = hPutStrLn t "const data [] = {" >> dumpOut f t >> hPutStrLn t "};" >> return (f, t)
   
-{- | dump to output file -}
-dumpOut :: Handle -- ^ Input file handle
-        -> Handle -- ^ Output file handle
-        -> IO ()
+{- | dump to output file, input->output->IO () -}
+dumpOut :: Handle -> Handle -> IO ()
 dumpOut from to = do
   chunk <- hGetNonBlocking from 16
-  eof <- hIsEOF from
   let s = "\t" ++ (concatMap (printf "0x%02x," . fromEnum) $ unpack chunk)
   hIsEOF from >>= \eof -> case eof of
     True -> hPutStrLn to $ init s
