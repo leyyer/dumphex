@@ -13,7 +13,7 @@ main = do
   liftM2 (,) (openFile f ReadMode) (openFile t WriteMode) >>= dumpOut_ >>= \(f,t) -> hClose f >> hClose t
     
 dumpOut_ :: (Handle, Handle) -> IO (Handle, Handle)
-dumpOut_ (f, t) = hPutStrLn t "const data [] = {" >> dumpOut f t >> hPutStrLn t "};" >> return (f, t)
+dumpOut_ (f, t) = hPutStrLn t "const unsigned char data[] = {" >> dumpOut f t >> hPutStrLn t "};" >> return (f, t)
   
 {- | dump to output file, input->output->IO () -}
 dumpOut :: Handle -> Handle -> IO ()
